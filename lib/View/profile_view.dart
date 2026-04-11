@@ -54,7 +54,7 @@ class _ProfileViewState extends State<ProfileView> {
                   // قسم بيانات المستخدم
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: NetworkImage("assets/me.jpeg"),
+                    backgroundImage: NetworkImage(user.image),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -64,7 +64,6 @@ class _ProfileViewState extends State<ProfileView> {
                   Text(user.email, style: const TextStyle(color: Colors.grey)),
                   const Divider(height: 40),
 
-                  // قسم "My Posts" (المطلب الخاص بعرض بوستات اليوزر)
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Align(
