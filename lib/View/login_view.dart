@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../constants/app_colors.dart';
 import 'feed_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -13,8 +14,22 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  bool _obscurePassword = true;
+  String? _errorMessage;
 
   void _handleLogin() async {
+    // Validation
+    if (_userController.text.isEmpty || _passController.text.isEmpty) {
+      setState(() {
+        _errorMessage = 'أدخل اسم المستخدم وكلمة المرور';
+      });
+      return;
+    }
+
+    setState(() {
+      _errorMessage = null;
+    });
+
     final auth = Provider.of<AuthProvider>(context, listen: false);
     
     bool success = await auth.login(_userController.text, _passController.text);
@@ -35,6 +50,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     // مراقبة حالة التحميل من الـ Provider
     final auth = Provider.of<AuthProvider>(context);
+    final isMobile = MediaQuery.of(context).size.width < 600;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
